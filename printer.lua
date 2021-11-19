@@ -87,12 +87,12 @@ do
         local Region = Region3.new(Start, End)
 
         for i, v in next, workspace:FindPartsInRegion3(Region, nil, math.huge) do
-            if self.Abort then 
+            if self.Abort then
                 self.Abort = false 
                 Callback.End()
                 break 
             end
-
+            warn("test")
             if v.Name ~= "bedrock" and v:FindFirstAncestor("Root") and v:FindFirstAncestor("Root").CFrame:PointToObjectSpace(v.Position) ~= UNBREAKABLE_GRASS_POSITION and (not v:FindFirstChild("portal-to-spawn")) and v.Parent and v.Parent.Name == "Blocks" then
                 repeat
                     if v ~= nil and v:IsDescendantOf(workspace) then
