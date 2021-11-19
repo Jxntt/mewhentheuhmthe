@@ -111,5 +111,36 @@ do
     end
 end
 
+    function Printer:Reverse(Callback)
+        Callback.Start()
+        local Start, End = Vector3.new(math.min(self.Start.X, self.End.X), math.min(self.Start.Y, self.End.Y), math.min(self.Start.Z, self.End.Z)), Vector3.new(math.max(self.Start.X, self.End.X), math.max(self.Start.Y, self.End.Y), math.max(self.Start.Z, self.End.Z))
+        local Region = Region3.new(Start, End)
+
+        for i, v in next, workspace:FindPartsInRegion3(Region, nil, math.huge) do
+            if self.Abort then 
+                self.Abort = false 
+                Callback.End()
+                break 
+            end
+
+            if v.Name ~= "bedrock" and (not v:FindFirstChild("portal-to-spawn")) and v.Parent and v.Parent.Name == "Blocks" then
+                repeat
+                    if v ~= nil then
+                        Callback.Build(v.Position)
+                        HIT_BLOCK:InvokeServer({
+                            player_tracking_category = "join_from_web";
+                            part = v;
+                            block = v;
+                            norm = v.Position;
+                            pos = Vector3.new(-1, 0, 0)
+                        })
+                    end
+                    wait()
+                until not v.Parent or self.Abort == true
+            end
+        end
+
+        Callback.End()
+    end
 
 return Printer
