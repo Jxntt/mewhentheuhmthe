@@ -110,8 +110,8 @@ do
                 until not v.Parent or self.Abort == true
             end
         end
-
         Callback.End()
     end
+end
 
 return Printer
