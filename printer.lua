@@ -92,10 +92,9 @@ do
                 Callback.End()
                 break 
             end
-            warn(v.Parent)
-            warn(v.Name)
+            warn(v.Parent .." | ".. v.Name)
             if v.Name ~= "bedrock" and (not v:FindFirstChild("portal-to-spawn")) and v.Parent and v.Parent.Name == "Blocks" then
-                repeat
+                repeat wait()
                     if v ~= nil then
                         Callback.Build(v.Position)
                         HIT_BLOCK:InvokeServer({
@@ -106,8 +105,7 @@ do
                             pos = Vector3.new(-1, 0, 0)
                         })
                     end
-                    wait()
-                until not v.Parent or self.Abort == true
+                until v == nil or self.Abort == true
             end
         end
         Callback.End()
