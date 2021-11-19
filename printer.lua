@@ -92,9 +92,7 @@ do
                 Callback.End()
                 break 
             end
-            if v.Name ~= "bedrock" and (not v:FindFirstChild("portal-to-spawn")) and v:FindFirstChild("Health") and v.Parent and v.Parent.Name == "Blocks" then
-            warn(v.Parent.Name)
-            print(v.Name)
+            if v.Name ~= "bedrock" and not v:FindFirstChild("portal-to-spawn") and v:FindFirstChild("Health") and v.Parent.Name == "Blocks" then
             repeat wait()
                     if v ~= nil then
                         Callback.Build(v.Position)
@@ -106,7 +104,7 @@ do
                             pos = Vector3.new(-1, 0, 0)
                         })
                     end
-                until v == nil or (not v:IsDescendantOf(workspace)) or self.Abort == true
+                until v == nil or not v:IsDescendantOf(workspace) or self.Abort == true
             end
         end
         Callback.End()
