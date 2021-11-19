@@ -91,7 +91,7 @@ do
                 Callback.End()
                 break 
             end
-            if v and (v.Name and v.Name ~= "bedrock") and not v:FindFirstChild("portal-to-spawn") and v:FindFirstChild("Health") and (v.Parent.Name and v.Parent.Name == "Blocks") then
+            if v:FindFirstChild("Health") and v.Name ~= "bedrock" and not v:FindFirstChild("portal-to-spawn") then
             repeat game.RunService.Heartbeat:wait()
                     if v then
                         Callback.Build(v.Position)
