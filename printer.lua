@@ -91,7 +91,7 @@ do
                 Callback.End()
                 break 
             end
-            if v.Name ~= "bedrock" and not v:FindFirstChild("portal-to-spawn") and v:FindFirstChild("Health") and v.Parent.Name == "Blocks" then
+            if v.Name ~= "bedrock" and not v:FindFirstChild("portal-to-spawn") and v:FindFirstChild("Health") and (v.Parent.Name and v.Parent.Name == "Blocks") then
             repeat wait()
                     if v ~= nil then
                         Callback.Build(v.Position)
