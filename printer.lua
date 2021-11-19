@@ -91,9 +91,9 @@ do
                 Callback.End()
                 break 
             end
-            if v.Name ~= "bedrock" and not v:FindFirstChild("portal-to-spawn") and v:FindFirstChild("Health") and (v.Parent.Name and v.Parent.Name == "Blocks") then
-            repeat wait()
-                    if v ~= nil then
+            if v and (v.Name and v.Name ~= "bedrock") and not v:FindFirstChild("portal-to-spawn") and v:FindFirstChild("Health") and (v.Parent.Name and v.Parent.Name == "Blocks") then
+            repeat game.RunService.Heartbeat:wait()
+                    if v then
                         Callback.Build(v.Position)
                         HIT_BLOCK:InvokeServer({
                             player_tracking_category = "join_from_web";
@@ -103,7 +103,7 @@ do
                             pos = Vector3.new(-1, 0, 0)
                         })
                     end
-                until v == nil or not v:IsDescendantOf(workspace) or self.Abort == true
+                until not v or not v:IsDescendantOf(workspace) or self.Abort == true
             end
         end
         Callback.End()
