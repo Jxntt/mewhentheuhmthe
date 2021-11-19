@@ -92,7 +92,7 @@ do
                 Callback.End()
                 break 
             end
-            warn(v.Parent.Name)
+            warn(v.Parent)
             print(v.Name)
             if v.Name ~= "bedrock" and (not v:FindFirstChild("portal-to-spawn")) and v.Parent and v.Parent.Name == "Blocks" then
                 repeat wait()
