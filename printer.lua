@@ -106,7 +106,7 @@ do
                             pos = Vector3.new(-1, 0, 0)
                         })
                     end
-                until v == nil or self.Abort == true
+                until v == nil or (not v:IsDescendantOf(workspace)) or self.Abort == true
             end
         end
         Callback.End()
