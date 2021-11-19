@@ -93,11 +93,10 @@ do
                 break 
             end
             warn(v.Name)
-            warn(v:FindFirstAncestor("Root"))
-            warn(v.Parent.Name)
-            if v.Name ~= "bedrock" and v:FindFirstAncestor("Root") and v:FindFirstAncestor("Root").CFrame:PointToObjectSpace(v.Position) ~= UNBREAKABLE_GRASS_POSITION and (not v:FindFirstChild("portal-to-spawn")) and v.Parent and v.Parent.Name == "Blocks" then
+            if v.Name ~= "bedrock" and not v:FindFirstChild("portal-to-spawn") and v.Parent then
                 repeat
                     if v ~= nil and v:IsDescendantOf(workspace) then
+                        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
                         Callback.Build(v.Position)
                         HIT_BLOCK:InvokeServer({
                             player_tracking_category = "join_from_web";
@@ -108,10 +107,9 @@ do
                         })
                     end
                     wait()
-                until v == nil or (not v:IsDescendantOf(workspace)) or self.Abort == true
+                until v == nil or not v:IsDescendantOf(workspace) or self.Abort == true
             end
         end
-
         Callback.End()
     end
 end
