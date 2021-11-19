@@ -93,20 +93,19 @@ do
                 break 
             end
 
-            if v.Name ~= "bedrock" and v.Name ~= "Part" and not v:FindFirstChild("portal-to-spawn") and v.Parent then
+            if v.Name ~= "bedrock" and v.Name ~= "Part" and not v:FindFirstChild("portal-to-spawn") and v.Parent and v.Parent.Parent.Name == "Blocks" then
                 repeat wait()
-                    if v ~= nil and v:IsDescendantOf(workspace) then
-                        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+                    game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+                    if v ~= nil then
                         Callback.Build(v.Position)
                         HIT_BLOCK:InvokeServer({
-                            player_tracking_category = "join_from_web";
                             part = v;
                             block = v;
                             norm = v.Position;
                             pos = Vector3.new(-1, 0, 0)
                         })
                     end
-                until v == nil or not v:IsDescendantOf(workspace) or self.Abort == true
+                until not v.Parent or self.Abort == true
             end
         end
         Callback.End()
