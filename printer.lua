@@ -63,7 +63,6 @@ do
                     Callback.Build(Position)
 
                     if not self:IsTaken(Position) then
-                        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
                         spawn(function()
                             PLACE_BLOCK:InvokeServer({
                                 blockType = self.Block;
