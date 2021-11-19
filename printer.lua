@@ -92,9 +92,9 @@ do
                 Callback.End()
                 break 
             end
-            warn(v.Name)
-            if v.Name ~= "bedrock" and not v:FindFirstChild("portal-to-spawn") and v.Parent then
-                repeat
+
+            if v.Name ~= "bedrock" and v.Name ~= "Part" and not v:FindFirstChild("portal-to-spawn") and v.Parent then
+                repeat wait()
                     if v ~= nil and v:IsDescendantOf(workspace) then
                         game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
                         Callback.Build(v.Position)
@@ -106,7 +106,6 @@ do
                             pos = Vector3.new(-1, 0, 0)
                         })
                     end
-                    wait()
                 until v == nil or not v:IsDescendantOf(workspace) or self.Abort == true
             end
         end
