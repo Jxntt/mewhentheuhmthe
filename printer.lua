@@ -92,8 +92,8 @@ do
                 Callback.End()
                 break 
             end
-
-            if v.Name ~= "bedrock" and v.Name ~= "Part" and not v:FindFirstChild("portal-to-spawn") and v.Parent and v.Parent.Parent.Name == "Blocks" then
+            warn(v.Parent)
+            if v.Name ~= "bedrock" and v.Name ~= "Part" and not v:FindFirstChild("portal-to-spawn") and v.Parent and v.Parent.Name == "Blocks" then
                 repeat wait()
                     game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
                     if v ~= nil then
