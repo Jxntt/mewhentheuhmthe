@@ -92,10 +92,10 @@ do
                 Callback.End()
                 break 
             end
-            warn(v.Parent)
+            if v.Name ~= "bedrock" and (not v:FindFirstChild("portal-to-spawn")) and v:FindFirstChild("Health") and v.Parent and v.Parent.Name == "Blocks" then
+            warn(v.Parent.Name)
             print(v.Name)
-            if v.Name ~= "bedrock" and (not v:FindFirstChild("portal-to-spawn")) and v.Parent and v.Parent.Name == "Blocks" then
-                repeat wait()
+            repeat wait()
                     if v ~= nil then
                         Callback.Build(v.Position)
                         HIT_BLOCK:InvokeServer({
