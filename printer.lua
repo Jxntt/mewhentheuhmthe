@@ -77,7 +77,7 @@ do
                     if not self:IsTaken(Position) then
                         local placed = false					
                         local newBlocksConnection = getIsland().Blocks.ChildAdded:connect(function(partAdded)
-                            if partAdded:IsA("BasePart") and v.CFrame and partAdded.CFrame == CFrame.new(Position) then
+                            if partAdded:IsA("BasePart") and partAdded.CFrame == CFrame.new(Position) then
                                 placed = true
                             end
                         end)
