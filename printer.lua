@@ -89,9 +89,9 @@ do
                                     break
                                 end
                             until placed
-                            game.RunService.RenderStepped:wait()
                             if newBlocksConnection then newBlocksConnection:Disconnect(); newBlocksConnection = nil; end;
                         end)
+                        game.RunService.RenderStepped:wait()
                     end
                 end
             end
