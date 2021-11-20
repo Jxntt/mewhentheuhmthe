@@ -11,6 +11,18 @@ do
     local HIT_BLOCK = remotePath.CLIENT_BLOCK_HIT_REQUEST
     local HEARTBEAT = game:GetService("RunService").Heartbeat
     local UNBREAKABLE_GRASS_POSITION = Vector3.new(6, -6, -141)
+    game.Workspace:WaitForChild("Islands")
+    function getIsland()
+        for i,v in pairs(game.Workspace.Islands:GetChildren()) do 
+            if v:FindFirstChild("Root") and math.abs(v.PrimaryPart.Position.X - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position.X) <= 1000 and math.abs(v.PrimaryPart.Position.Z - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position.Z) <= 1000 then 
+                if v.Owners:FindFirstChild(""..game.Players.LocalPlayer.UserId) then
+                    return v
+                end
+            elseif v:FindFirstChild("Root") and math.abs(v.PrimaryPart.Position.X - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position.X) > 1000 and math.abs(v.PrimaryPart.Position.Z - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position.Z) > 1000 and v.Owners:FindFirstChild(""..game.Players.LocalPlayer.UserId) then
+                return v
+            end 
+        end 
+    end
 
     Printer.__index = Printer
 
@@ -63,15 +75,21 @@ do
                     Callback.Build(Position)
 
                     if not self:IsTaken(Position) then
-                        spawn(function()
-                            PLACE_BLOCK:InvokeServer({
-                                blockType = self.Block;
-                                cframe = CFrame.new(Position);
-                                player_tracking_category = "join_from_web";
-                                upperSlab = false;
-                            })
+                        local placed = false					
+                        local newBlocksConnection = getIsland().Blocks.ChildAdded:connect(function(partAdded)
+                            if partAdded:IsA("BasePart") and v.Position and partAdded.Position == v.Position then
+                                placed = true
+                            end
                         end)
-                        HEARTBEAT:wait()
+                        repeat game.RunService.RenderStepped:wait()
+                            placed = false
+                            local isSuccess = PLACE_BLOCK:InvokeServer({cframe = CFrame.new(Position), blockType = self.Block}).success
+                            if placed and isSuccess then
+                                break
+                            end
+                        until placed
+                        game.RunService.RenderStepped:wait()
+                        if newBlocksConnection then newBlocksConnection:Disconnect(); newBlocksConnection = nil; end;
                     end
                 end
             end
