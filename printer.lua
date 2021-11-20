@@ -75,21 +75,23 @@ do
                     Callback.Build(Position)
 
                     if not self:IsTaken(Position) then
-                        local placed = false					
-                        local newBlocksConnection = getIsland().Blocks.ChildAdded:connect(function(partAdded)
-                            if partAdded:IsA("BasePart") and partAdded.CFrame == CFrame.new(Position) then
-                                placed = true
-                            end
+                        spawn(function()
+                            local placed = false					
+                            local newBlocksConnection = getIsland().Blocks.ChildAdded:connect(function(partAdded)
+                                if partAdded:IsA("BasePart") and partAdded.CFrame == CFrame.new(Position) then
+                                    placed = true
+                                end
+                            end)
+                            repeat game.RunService.RenderStepped:wait()
+                                placed = false
+                                local isSuccess = PLACE_BLOCK:InvokeServer({cframe = CFrame.new(Position), blockType = self.Block}).success
+                                if placed and isSuccess then
+                                    break
+                                end
+                            until placed
+                            game.RunService.RenderStepped:wait()
+                            if newBlocksConnection then newBlocksConnection:Disconnect(); newBlocksConnection = nil; end;
                         end)
-                        repeat game.RunService.RenderStepped:wait()
-                            placed = false
-                            local isSuccess = PLACE_BLOCK:InvokeServer({cframe = CFrame.new(Position), blockType = self.Block}).success
-                            if placed and isSuccess then
-                                break
-                            end
-                        until placed
-                        game.RunService.RenderStepped:wait()
-                        if newBlocksConnection then newBlocksConnection:Disconnect(); newBlocksConnection = nil; end;
                     end
                 end
             end
