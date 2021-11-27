@@ -15,7 +15,9 @@ do
     function getIsland()
         for i,v in pairs(game.Workspace.Islands:GetChildren()) do 
             if v:FindFirstChild("Root") and math.abs(v.PrimaryPart.Position.X - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position.X) <= 1000 and math.abs(v.PrimaryPart.Position.Z - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position.Z) <= 1000 then 
-                if v.Owners:FindFirstChild(""..game.Players.LocalPlayer.UserId) then
+                if not getgenv().uhm and v.Owners:FindFirstChild(""..game.Players.LocalPlayer.UserId) then
+                    return v
+                elseif getgenv().uhm and (v.Owners:FindFirstChild(""..game.Players.LocalPlayer.UserId) or v.AccessBuild:FindFirstChild(""..game.Players.LocalPlayer.UserId)) then
                     return v
                 end
             elseif v:FindFirstChild("Root") and math.abs(v.PrimaryPart.Position.X - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position.X) > 1000 and math.abs(v.PrimaryPart.Position.Z - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position.Z) > 1000 and v.Owners:FindFirstChild(""..game.Players.LocalPlayer.UserId) then
